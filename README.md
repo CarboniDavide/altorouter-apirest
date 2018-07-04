@@ -22,7 +22,7 @@ If you want to test the API directly you have a web site of products:
 
 http://www.catalogue.carboni.ch/
 
-which you can manage by using API Rest (GET, POST, UPDATE, DELETE)
+which you can manage by using API Rest (GET, POST, PUT, DELETE)
 
 https://www.api.carboni.ch
 
