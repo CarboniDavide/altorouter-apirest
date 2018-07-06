@@ -1,6 +1,6 @@
 # AltoRouter-API Rest
 
-The project is a little example how use AltoRuter to design a API Rest
+The project is a little example how to use AltoRuter to design a API Rest
 
 # Required
 
