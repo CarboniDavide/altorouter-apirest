@@ -24,7 +24,7 @@ http://www.catalogue.carboni.ch/
 
 which you can manage by using API Rest (GET, POST, PUT, DELETE)
 
-https://www.api.carboni.ch
+https://www.catalogue.carboni.ch/api/v1
 
 # Ressources
 
