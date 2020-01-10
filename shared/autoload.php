@@ -6,15 +6,10 @@
  * Time: 18:35
  */
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/config/database.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/models/product.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/models/category.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/view.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/AltoRouter.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/utilities.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/api/categoryController.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/api/productController.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/web/productControllerWeb.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/web/categoryControllerWeb.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/web/homeControllerWeb.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/api/apiController.php';
+spl_autoload_register(function($className) {
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/' . $className . '.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/api/' . $className . '.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/web/' . $className . '.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/' . $className . '.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/models/' . $className . '.php';
+});
