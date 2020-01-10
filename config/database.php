@@ -11,7 +11,7 @@ require_once('config/config.php');
 class Database{
 
     // specify your own database credentials
-    private $host = localhost;
+    private $host = M_DB_HOST;
     private $db_name = M_DB_NAME;
     private $username = M_DB_USER;
     private $password = M_DB_PASS;
