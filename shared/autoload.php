@@ -6,6 +6,9 @@
  * Time: 18:35
  */
 
+include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/rb-mysql.php';
+R::setup( 'mysql:host=localhost;api_db=mydatabase','test', 'test' );
+
 spl_autoload_register(function($className) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/' . $className . '.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/api/' . $className . '.php';
