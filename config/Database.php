@@ -10,15 +10,12 @@ require_once('config/config.php');
 
 class Database{
 
-    // specify your own database credentials
-    private $host = M_DB_HOST;
-    private $db_name = M_DB_NAME;
-    private $username = M_DB_USER;
-    private $password = M_DB_PASS;
-    public $conn;
-
-    // get the database connection
     public static function setup(){
-        R::setup('mysql:host=localhost;dbname=api_db', 'test', 'test');
+        $host = M_DB_HOST;
+        $db_name = M_DB_NAME;
+        $username = M_DB_USER;
+        $password = M_DB_PASS;
+        
+        R::setup("mysql:host=$host;dbname=$db_name", $username, $password);
     }
 }
