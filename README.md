@@ -1,6 +1,6 @@
 # AltoRouter-API Rest
 
-The project is a little example how to use AltoRuter to design a API Rest
+The project is a little example how to use AltoRuter and ORM RedBean to design a API Rest
 
 # Required
 
@@ -8,7 +8,7 @@ PHP 5.3
 
 # Features
 
-- API Rest design using AltoRouter
+- API Rest design using AltoRouter and RedBean
 - A Web Site to simulate a on-line stock of products
 
 # How to use
@@ -33,3 +33,5 @@ For more informations:
 http://altorouter.com/
 
 https://github.com/dannyvankooten/AltoRouter
+
+https://www.redbeanphp.com/index.php
