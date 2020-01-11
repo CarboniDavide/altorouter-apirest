@@ -8,34 +8,8 @@
  */
 
 
-class ProductController
+class ProductController extends Controller
 {
-    private $param;
-
-    /**
-     * productController constructor.
-     * @param $param
-     */
-    public function __construct($param)
-    {
-        $this->param = $param;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getParam()
-    {
-        return $this->param;
-    }
-
-    /**
-     * @param mixed $param
-     */
-    public function setParam($param)
-    {
-        $this->param = $param;
-    }
 
     public function read()
     {
@@ -204,7 +178,7 @@ class ProductController
     {
         header("Content-Type: application/json; charset=UTF-8");
         echo json_encode(
-            R::getAll('SELECT c.name, c.id FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.id = :id ORDER BY p.id ASC', [':id' => $params['id']] ), 
+            R::getAll('SELECT c.name, c.id FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.id = :id ORDER BY c.id ASC', [':id' => $params['id']] ), 
             JSON_PRETTY_PRINT
         );
     }
