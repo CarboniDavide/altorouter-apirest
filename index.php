@@ -7,9 +7,11 @@
  */
 
 // load all classes
-require_once("shared/autoload.php"); // Load all necessary class definitions
+require_once("shared/autoload.php");
 
+Load::All();
 Database::setup();
+
 $router = new AltoRouter();
 $router->setBasePath('');
 

@@ -1,18 +1,45 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Davide
- * Date: 18.03.18
- * Time: 18:35
- */
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/rb-mysql.php';
+define('PATH_ROOT', $_SERVER['DOCUMENT_ROOT']);
 
-spl_autoload_register(function($className) {
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/' . $className . '.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/' . $className . '.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/api/' . $className . '.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/web/' . $className . '.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/' . $className . '.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/models/' . $className . '.php';
-});
+class Load{
+
+    private static $directories = ['includes', 'controllers', 'config', 'models'];
+
+    public static function All(){
+        self::Classes();
+        self::Shared();
+    }
+
+    public static function Classes(){
+        spl_autoload_register(function($className) {
+            foreach(self::$directories as $dir){
+                self::autoload($className, PATH_ROOT.'/'.$dir);
+            }
+        });
+    }
+
+    public static function Shared(){
+        include_once PATH_ROOT . '/includes/rb-mysql.php';
+    }
+
+    private static function autoload( $class, $dir ) {
+
+        foreach ( scandir( $dir ) as $file ) {
+
+            // is php file?
+            if ( substr( $file, 0, 2 ) !== '._' && preg_match( "/.php$/i" , $file ) ) {
+
+                // filename matches class?
+                if ( str_replace( '.php', '', $file ) == $class || str_replace( '.class.php', '', $file ) == $class ) {
+                    include_once $dir.'/'.$file;
+                }
+            }
+
+            // is directory?
+            if ( is_dir( $dir.'/'.$file ) && substr( $file, 0, 1 ) !== '.' )
+                self::autoload( $class, $dir.'/'.$file);
+        }
+    }
+
+}
