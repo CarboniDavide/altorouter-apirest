@@ -33,6 +33,9 @@ class Load{
                 // filename matches class?
                 if ( str_replace( '.php', '', $file ) == $class || str_replace( '.class.php', '', $file ) == $class ) {
                     include_once $dir.'/'.$file;
+                    if (method_exists($class,'init')){
+                        $class::init();
+                    }
                 }
             }
 
