@@ -10,24 +10,16 @@
 
 class ProductController extends Controller
 {
-
-    public function read()
+    public function index()
     {
         // required headers
-        header("Access-Control-Allow-Origin: *");
         header("Content-Type: application/json; charset=UTF-8");
-        echo json_encode(R::getAll('SELECT * FROM products'), JSON_PRETTY_PRINT);
+        echo json_encode(Product::findAll(), JSON_PRETTY_PRINT);
     }
 
-    private function existe($id)
-    {
-        return R::findOne('products','id = ?', [$id]) ? true : false;
-    }
-
-    public function read_one($param)
-    {
+    public function show($params){
         header("Content-Type: application/json; charset=UTF-8");
-        echo json_encode(R::getRow('SELECT * FROM products WHERE id = ?', [$param['id']]), JSON_PRETTY_PRINT);
+        echo json_encode(Product::find($params['id']), JSON_PRETTY_PRINT);
     }
 
     public function create(){
@@ -55,7 +47,7 @@ class ProductController extends Controller
         }
 
         // create a new bean
-        $product= R::dispense( 'products' );
+        $product = new Product();
         // set product property values
         $product->name = $data->name;
         $product->price = $data->price;
@@ -64,13 +56,13 @@ class ProductController extends Controller
         $product->created = $data->created;
         $product->modified = $data->modified;
         // store and check
-        if(R::store( $product )){
+        if($product->save()){
             header("HTTP/1.1 201 OK Created");
             echo json_encode(array("message"=>"Product was created."), JSON_PRETTY_PRINT);
         }
         else{
             header("HTTP/1.1 400 Error");
-            echo json_encode(array("message"=>"Unable to create product."),JSON_PRETTY_PRINT);
+            echo json_encode(array("message"=>"Unable to create product."), JSON_PRETTY_PRINT);
         }
     }
 
@@ -155,26 +147,26 @@ class ProductController extends Controller
         );
     }
 
-    public function readFirst()
+    public function first()
     {
         header("Content-Type: application/json; charset=UTF-8");
-        echo json_encode(R::getRow('SELECT * FROM products ORDER BY id ASC LIMIT 0,1'), JSON_PRETTY_PRINT);
+        echo json_encode(Product::first(), JSON_PRETTY_PRINT);
     }
 
-    public function readLast()
+    public function last()
     {
         header("Content-Type: application/json; charset=UTF-8");
-        echo json_encode(R::getRow('SELECT * FROM products ORDER BY id DESC LIMIT 0,1'), JSON_PRETTY_PRINT);
+        echo json_encode(Product::last(), JSON_PRETTY_PRINT);
     }
 
     public function count()
     {
         header("Content-Type: application/json; charset=UTF-8");
-        echo json_encode(R::getRow('SELECT COUNT(*) as total_rows FROM products'), JSON_PRETTY_PRINT);
+        echo json_encode(Product::count(), JSON_PRETTY_PRINT);
     }
 
 
-    public function read_product_as_category($params)
+    public function product_category($params)
     {
         header("Content-Type: application/json; charset=UTF-8");
         echo json_encode(
@@ -182,70 +174,5 @@ class ProductController extends Controller
             JSON_PRETTY_PRINT
         );
     }
-
-    private function read_pagination($from_record_num, $records_per_page, $home_url, $page){
-
-        // required headers
-        header("Access-Control-Allow-Origin: *");
-        header("Content-Type: application/json; charset=UTF-8");
-
-        // utilities
-        $utilities = new Utilities();
-
-        // instantiate database and product object
-        $database = new Database();
-        $db = $database->getConnection();
-
-        // initialize object
-        $product = new Product($db);
-
-        // query products
-        $stmt = $product->readPaging($from_record_num, $records_per_page);
-        $num = $stmt->rowCount();
-
-        // check if more than 0 record found
-        if($num>0){
-
-            // products array
-            $products_arr=array();
-            $products_arr["records"]=array();
-            $products_arr["paging"]=array();
-
-            // retrieve our table contents
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                // extract row
-                // this will make $row['name'] to
-                // just $name only
-                extract($row);
-
-                $product_item=array(
-                    "id" => $id,
-                    "name" => $name,
-                    "description" => html_entity_decode($description),
-                    "price" => $price,
-                    "category_id" => $category_id,
-                    "category_name" => $category_name
-                );
-
-                array_push($products_arr["records"], $product_item);
-            }
-
-
-            // include paging
-            $total_rows=$product->count();
-            $page_url="{$home_url}products?limit={$records_per_page}&";
-            $paging=$utilities->getPaging($page, $total_rows, $records_per_page, $page_url);
-            $products_arr["paging"]=$paging;
-
-            echo json_encode($products_arr,JSON_PRETTY_PRINT);
-        }
-
-        else{
-            echo json_encode(
-                array("message" => "No products found.")
-            );
-        }
-    }
-
 }
 
