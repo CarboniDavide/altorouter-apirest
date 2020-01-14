@@ -18,13 +18,13 @@ class Model{
       $row = R::getRow("SELECT * FROM $tableName WHERE id = ?", [$id]);
       if (!$row) return null;
 
-      $product = new Product();
+      $model = new Model();
 
       foreach($row as $key=>$value) {
-        $product->$key = $value;
+        $model->$key = $value;
       }
 
-      return $product;
+      return $model;
     }
 
     public static function findBy($attribute, $value){
@@ -109,7 +109,7 @@ class Model{
     {
       $class_name = strtolower(get_called_class());
       if (preg_match("/{'_'}/i", $class_name)) { return $class_name; }
-      return $class_name[count($class_name) - 1] == 'y' ? substr_replace($class_name, "ies", count($class_name)-1) : $class_name."s";
+      return $class_name[strlen($class_name) - 1] == 'y' ? substr_replace($class_name, "ies", strlen($class_name)-1) : $class_name."s";
     }
 
-}
+} 
