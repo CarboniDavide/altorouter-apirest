@@ -55,6 +55,7 @@ class ProductController extends Controller
         $product->category_id = $data->category_id;
         $product->created = $data->created;
         $product->modified = $data->modified;
+        
         // store and check
         if($product->save()){
             header("HTTP/1.1 201 OK Created");
@@ -70,9 +71,11 @@ class ProductController extends Controller
         // required headers
         header("Content-Type: application/json; charset=UTF-8");
 
+        // get product to delete
+        $product = Product::find($params['id']);
+
         // delete product and check
-        // hunt return the number of delected rows elsewhere 0
-        if(R::hunt('products','id = ?', [ $params['id'] ])){  
+        if($product->delete()){  
             header("HTTP/1.1 202 OK Deleted");
             echo json_encode(array("message"=>"Product was deleted."), JSON_PRETTY_PRINT);
         }
@@ -91,7 +94,7 @@ class ProductController extends Controller
         $data = json_decode(file_get_contents("php://input"));
 
         // get product to update
-        $product = R::findOne('products', 'id = ?', [ $params['id'] ]);
+        $product = Product::find($params['id']);
 
         // check if exists -> product is null
         if (!$product)
@@ -112,7 +115,7 @@ class ProductController extends Controller
         $product->category_id = !isset($data->category_id) ? $product->category_id :  $data->category_id;
 
         // update and check
-        if(R::store( $product )){
+        if($product->update()){
             header("HTTP/1.1 201 OK Updated");
             echo json_encode(array("message"=>"Product was updated."), JSON_PRETTY_PRINT);
         }
