@@ -7,8 +7,8 @@ class Load{
     private static $directories = ['includes', 'controllers', 'config', 'models'];
 
     public static function All(){
-        self::Classes();
         self::Shared();
+        self::Classes();
     }
 
     public static function Classes(){
