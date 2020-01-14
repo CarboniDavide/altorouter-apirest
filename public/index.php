@@ -1,13 +1,9 @@
 <?php
 
-/*
- * Carboni Davide
- * AltoRouter example
- *
- */
+define('BASE_DIR', dirname( __FILE__ ) . '/..');
 
 // load all classes
-require_once("shared/autoload.php");
+require_once("../shared/autoload.php");
 
 Load::All();
 Database::setup();
@@ -15,8 +11,8 @@ Database::setup();
 $router = new AltoRouter();
 $router->setBasePath('');
 
-include_once ("routes/api.php"); // api routes
-include_once ("routes/web.php"); // web routes
+include_once ("../routes/api.php"); // api routes
+include_once ("../routes/web.php"); // web routes
 
 // match the routes
 $match = $router->match();
