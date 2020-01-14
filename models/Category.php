@@ -1,4 +1,4 @@
 <?php
 
-class Category extends RedBean_SimpleModel {
+class Category extends Model{
 }
