@@ -11,13 +11,13 @@ $prefix = "/api/v1";
 $router->map( 'GET', $prefix.'/', 'ApiController#index', 'api_index');
 
 # Routes API Product
-$router->map( 'GET', $prefix.'/products', 'ProductController#read', 'read_products');
-$router->map( 'GET', $prefix.'/products/[i:id]', 'ProductController#read_one', 'read_one_products');
-$router->map( 'GET', $prefix.'/products/[i:id]/categories', 'ProductController#read_product_as_category', 'read_one_products_as_category');
-$router->map( 'GET', $prefix.'/products/first', 'ProductController#readFirst', 'read_product_first');
-$router->map( 'GET', $prefix.'/products/last', 'ProductController#readLast', 'read_product_last');
-$router->map( 'GET', $prefix.'/products/count', 'ProductController#count', 'read_products_count');
-$router->map( 'GET', $prefix.'/products/search', 'ProductController#search', 'search_products');
+$router->map( 'GET', $prefix.'/products', 'ProductController#index', 'products_index');
+$router->map( 'GET', $prefix.'/products/[i:id]', 'ProductController#show', 'products_show');
+$router->map( 'GET', $prefix.'/products/first', 'ProductController#first', 'product_first');
+$router->map( 'GET', $prefix.'/products/last', 'ProductController#last', 'product_last');
+$router->map( 'GET', $prefix.'/products/count', 'ProductController#count', 'products_count');
+$router->map( 'GET', $prefix.'/products/search', 'ProductController#search', 'products_search');
+$router->map( 'GET', $prefix.'/products/[i:id]/categories', 'ProductController#product_category', 'products_as_category');
 
 $router->map( 'PUT', $prefix.'/products/[i:id]', 'ProductController#update', 'update_product');
 $router->map( 'DELETE', $prefix.'/products/[i:id]', 'ProductController#delete', 'delete_product');
