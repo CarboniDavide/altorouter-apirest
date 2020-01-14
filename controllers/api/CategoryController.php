@@ -3,10 +3,10 @@
 class CategoryController extends Controller
 {
 
-    public function read(){
+    public function index(){
         header("Access-Control-Allow-Origin: *");
         header("Content-Type: application/json; charset=UTF-8");
-        echo json_encode(R::getAll('SELECT * FROM categories'), JSON_PRETTY_PRINT);
+        echo json_encode(Category::findAll(), JSON_PRETTY_PRINT);
     }
 
     public function create(){
@@ -32,14 +32,14 @@ class CategoryController extends Controller
         }
 
         // create a new bean
-        $category= R::dispense( 'categories' );
+        $category= new Category();
         // set category property values
         $category->name = $data->name;
         $category->description = $data->description;
         $category->created = $data->created;
         $category->modified = $data->modified;
         // store and check
-        if(R::store( $category )){
+        if($category->save()){
             header("HTTP/1.1 201 OK Created");
             echo json_encode(array("message" => "Category was created."), JSON_PRETTY_PRINT);
         }
@@ -53,9 +53,11 @@ class CategoryController extends Controller
         // required headers
         header("Content-Type: application/json; charset=UTF-8");
 
+        // get category to update
+        $category = Category::find($params['id']);
+
         // delete category and check
-        // hunt return the number of delected rows elsewhere 0
-        if(R::hunt('categories', 'id = ?', [ $params['id'] ])){  
+        if($category->delete()){  
             header("HTTP/1.1 202 OK Deleted");
             echo json_encode(array("message" => "Category was deleted."), JSON_PRETTY_PRINT);
         }
@@ -73,7 +75,7 @@ class CategoryController extends Controller
         $data = json_decode(file_get_contents("php://input"));
 
         // get category to update
-        $category = R::findOne('categories', 'id = ?', [ $params['id'] ]);
+        $category = Category::find($params['id']);
 
         // check if exists -> category is null
         if (!$category)
@@ -92,7 +94,7 @@ class CategoryController extends Controller
         $category->modified = !isset($data->modified) ? $category->modified :  $data->modified;
 
         // update and check
-        if(R::store( $category )){
+        if($category-update()){
             header("HTTP/1.1 201 OK Updated");
             echo json_encode(array("message"=>"Category was updated."), JSON_PRETTY_PRINT);
         }
@@ -102,9 +104,9 @@ class CategoryController extends Controller
         }
     }
 
-    public function read_one($params){
+    public function show($params){
         header("Content-Type: application/json; charset=UTF-8");
-        echo json_encode(R::getRow('SELECT * FROM categories WHERE id = ?', [ $params['id']] ), JSON_PRETTY_PRINT);
+        echo json_encode(Category::find($params['id']), JSON_PRETTY_PRINT);
     }
 
     public function search(){
@@ -130,31 +132,26 @@ class CategoryController extends Controller
         );
     }
 
-    public function readFirst(){
+    public function first(){
         header("Content-Type: application/json; charset=UTF-8");
-        echo json_encode(R::getRow('SELECT * FROM categories ORDER BY id ASC LIMIT 0,1'), JSON_PRETTY_PRINT);
+        echo json_encode(Category::first(), JSON_PRETTY_PRINT);
     }
 
-    public function readLast(){
+    public function last(){
         header("Content-Type: application/json; charset=UTF-8");
-        echo json_encode(R::getRow('SELECT * FROM categories ORDER BY id DESC LIMIT 0,1'), JSON_PRETTY_PRINT);
+        echo json_encode(Category::last(), JSON_PRETTY_PRINT);
     }
 
     public function count(){
         header("Content-Type: application/json; charset=UTF-8");
-        echo json_encode(R::getRow('SELECT COUNT(*) as total_rows FROM categories'), JSON_PRETTY_PRINT);
+        echo json_encode(Category::count(), JSON_PRETTY_PRINT);
     }
 
-    public function read_categories_as_products($params){
+    public function category_product($params){
         header("Content-Type: application/json; charset=UTF-8");
         echo json_encode(
             R::getAll('SELECT p.name, p.id FROM categories c LEFT JOIN products p ON p.category_id = c.id WHERE c.id = :id ORDER BY p.id ASC', [':id' => $params['id']] ), 
             JSON_PRETTY_PRINT
         );
     }
-
-    private function existe($id){
-        return R::findOne('categories','id = ?', [$id]) ? true : false;
-    }
-
 }
