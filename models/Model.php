@@ -89,7 +89,8 @@ class Model{
     protected static function tableName()
     {
       $class_name = strtolower(get_called_class());
-      return preg_match("/{'_'}/i", $class_name) ? $class_name : $class_name."s";
+      if (preg_match("/{'_'}/i", $class_name)) { return $class_name; }
+      return $class_name[count($class_name) - 1] == 'y' ? substr_replace($class_name, "ies", count($class_name)-1) : $class_name."s";
     }
 
 }
