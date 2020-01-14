@@ -14,7 +14,17 @@ class Model{
 
     public static function find($id){
       $tableName = self::$table;
-      return R::getRow("SELECT * FROM $tableName WHERE id = ?", [$id]);
+      
+      $row = R::getRow("SELECT * FROM $tableName WHERE id = ?", [$id]);
+      if (!$row) return null;
+
+      $product = new Product();
+
+      foreach($row as $key=>$value) {
+        $product->$key = $value;
+      }
+
+      return $product;
     }
 
     public static function findBy($attribute, $value){
@@ -24,7 +34,7 @@ class Model{
 
     public static function findAll(){
       $tableName = self::$table;
-      return R::getAll("SELECT * FROM $tableName");
+      return R::getAll("SELECT * FROM $tableName ORDER BY ID ASC");
     }
 
     public static function findAllBy($attribute, $value){
@@ -48,7 +58,7 @@ class Model{
     }
 
     public static function searchBy($attributes_values){
-      $query = "";
+      $query = "";    
       $index = 0;
       $keys = array_keys($attributes_values);
       $values;
@@ -66,24 +76,33 @@ class Model{
     }
   
 
-    public function delete()
-    {
-      
+    public function delete(){
+      return R::hunt(static::$table, 'id = ?', [ $this->id ]);
     }
     
-    protected function update()
-    {
-    
+    public function update(){
+      $model = R::dispense( static::$table );
+      $attributes = get_object_vars($this);
+      foreach($attributes as $key=>$value) {
+        $model->$key = $value;
+      }
+
+      return R::store( $model );    
     }
 
     public function save()
     {
         $table_name = self::$table;
+        $model = R::dispense( static::$table );
+
         $attributes = get_object_vars($this);
         $attribute_names = array_keys($attributes);
-        $query = "INSERT INTO $table_name (".join(',', $attribute_names).") VALUES (".join(',', array_map(function ($item) { return '?';}, $attribute_names)).")";
-        R::exec($query, $attribute_names);
-        return 1;
+
+        foreach($attributes as $key=>$value) {
+          $model->$key = $value;
+        }
+  
+        return R::store( $model );
     }
 
     protected static function tableName()
