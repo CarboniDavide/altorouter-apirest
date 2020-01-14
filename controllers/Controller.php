@@ -16,5 +16,12 @@ class Controller{
     {
         $this->param = $param;
     }
+
+    protected function controllerName()
+    {
+        $class_name = get_class($this);
+        preg_match('/\\\\(.+?)Controller$/', $class_name, $matches);
+        return $matches[1];
+    }
     
 }
