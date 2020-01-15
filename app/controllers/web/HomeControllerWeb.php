@@ -10,10 +10,6 @@ class HomeControllerWeb
 {
     public function index()
     {
-        return new View( 
-            [ 
-                'page' => 'home/index', 
-            ]
-        );
+        return view('home.index');
     }
 }

@@ -4,13 +4,6 @@ class ProductControllerWeb
 {
     public function index()
     {
-        return new View( 
-            [ 
-                'page' => 'product/index', 
-                'products' => R::getAll('SELECT * FROM products') 
-            ]
-        );
-
-        return view("product.product", ['products' => R::getAll('SELECT * FROM products')] );
+        return view("product.index", ['products' => Product::findAll()] );
     }
 }

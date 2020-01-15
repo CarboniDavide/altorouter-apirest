@@ -14,6 +14,9 @@ $password = M_DB_PASS;
 
 R::setup("mysql:host=$host;dbname=$db_name", $username, $password);
 
+// include rendering views
+include_once BASE_DIR . '/includes/view-rendering.php';
+
 // include routes
 require_once BASE_DIR . "/routes/dispatcher.php";
 
