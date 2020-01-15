@@ -1,13 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Davide Carboni
- * Date: 20/03/2018
- * Time: 20:11
- */
-
-
 class ProductController extends Controller
 {
     public function index()

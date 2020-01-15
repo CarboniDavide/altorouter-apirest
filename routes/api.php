@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Davide
- * Date: 22/03/2018
- * Time: 18:22
- */
 
 $prefix = API_PREFIX;
 

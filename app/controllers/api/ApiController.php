@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Davide
- * Date: 31/03/2018
- * Time: 00:26
- */
 
 class ApiController
 {
