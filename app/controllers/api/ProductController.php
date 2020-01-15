@@ -65,6 +65,12 @@ class ProductController extends Controller
 
         // get product to delete
         $product = Product::find($params['id']);
+        
+        if(!$product){  
+            header("HTTP/1.1 404 Not found");
+            echo json_encode(array("message"=>"Selected product don't exists."), JSON_PRETTY_PRINT);
+            return;
+        }
 
         // delete product and check
         if($product->delete()){  
