@@ -23,5 +23,12 @@ class Controller{
         preg_match('/\\\\(.+?)Controller$/', $class_name, $matches);
         return $matches[1];
     }
+
+    public function view($page, $data=null){
+        $_page = str_replace(",", "/", $page);
+        $_data = data;
+        array_push($_data, array('page' => $page));
+        return new View($_data);
+    }
     
 }
