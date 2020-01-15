@@ -1,6 +1,6 @@
 <?php
 
-$directories = ['includes', 'app', 'config'];
+$directories = ['includes', 'app'];
 
 spl_autoload_register(function($className) {
     
