@@ -6,7 +6,7 @@ class CategoryControllerWeb
     {
         return new View( 
             [ 
-                'page' => 'category/categories', 
+                'page' => 'category/index', 
                 'categories' => R::getAll('SELECT * FROM categories') 
             ]
         );

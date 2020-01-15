@@ -6,7 +6,7 @@ class ProductControllerWeb
     {
         return new View( 
             [ 
-                'page' => 'product/products', 
+                'page' => 'product/index', 
                 'products' => R::getAll('SELECT * FROM products') 
             ]
         );
