@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `api_dbsd` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE  IF NOT EXISTS `api_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `api_db`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
