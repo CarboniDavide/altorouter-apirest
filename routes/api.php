@@ -6,7 +6,7 @@
  * Time: 18:22
  */
 
-$prefix = "/api/v1";
+$prefix = API_PREFIX;
 
 $router->map( 'GET', $prefix.'/', 'ApiController#index', 'api_index');
 
