@@ -1,48 +1,36 @@
 <?php
 
-class Load{
+$directories = ['includes', 'app', 'config'];
 
-    private static $directories = ['includes', 'app', 'config'];
+spl_autoload_register(function($className) {
+    
+    global $directories;
+    
+    foreach($directories as $dir){
+        autoload($className, BASE_DIR.'/'.$dir);
+    }
+});
 
-    public static function All(){
+
+function autoload( $class, $dir ) {
+
+    foreach ( scandir( $dir ) as $file ) {
         
-        self::Shared();
-        self::Classes();
-    }
-
-    public static function Classes(){
-        spl_autoload_register(function($className) {
-            foreach(self::$directories as $dir){
-                self::autoload($className, BASE_DIR.'/'.$dir);
-            }
-        });
-    }
-
-    public static function Shared(){
-        include_once BASE_DIR . '/includes/rb-mysql.php';
-    }
-
-    private static function autoload( $class, $dir ) {
-        
-        foreach ( scandir( $dir ) as $file ) {
+        // is php file?
+        if ( substr( $file, 0, 2 ) !== '._' && preg_match( "/.php$/i" , $file ) ) {
             
-            // is php file?
-            if ( substr( $file, 0, 2 ) !== '._' && preg_match( "/.php$/i" , $file ) ) {
+            // filename matches class?
+            if ( str_replace( '.php', '', $file ) == $class || str_replace( '.class.php', '', $file ) == $class ) {
+                include_once $dir.'/'.$file;
                 
-                // filename matches class?
-                if ( str_replace( '.php', '', $file ) == $class || str_replace( '.class.php', '', $file ) == $class ) {
-                    include_once $dir.'/'.$file;
-                    
-                    if (method_exists($class,'init')){
-                        $class::init();
-                    }
+                if (method_exists($class,'init')){
+                    $class::init();
                 }
             }
-
-            // is directory?
-            if ( is_dir( $dir.'/'.$file ) && substr( $file, 0, 1 ) !== '.' )
-                self::autoload( $class, $dir.'/'.$file);
         }
-    }
 
+        // is directory?
+        if ( is_dir( $dir.'/'.$file ) && substr( $file, 0, 1 ) !== '.' )
+            autoload( $class, $dir.'/'.$file);
+    }
 }
