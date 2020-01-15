@@ -6,7 +6,7 @@
  * Time: 18:52
  */
 
-require_once('config/config.php');
+require_once (BASE_DIR .'/config/config.php');
 
 class Database{
 
