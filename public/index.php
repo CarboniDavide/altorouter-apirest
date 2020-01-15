@@ -3,7 +3,7 @@
 define('BASE_DIR', dirname( __FILE__ ) . '/..');
 
 // load all classes
-require_once("../shared/autoload.php");
+require_once("../includes/autoload.php");
 
 Load::All();
 Database::setup();

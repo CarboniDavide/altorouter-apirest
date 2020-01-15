@@ -17,11 +17,11 @@
  
 	<body> 
 
-		<?php include_once BASE_DIR . '/shared/layout/header.php'; ?>	
+		<?php include_once BASE_DIR . '/views/layout/header.php'; ?>	
 
 		<?php include_once BASE_DIR . '/views/'.$page.'.php'; ?>	
 
-		<?php include_once BASE_DIR . '/shared/layout/footer.php'; ?>	
+		<?php include_once BASE_DIR . '/views/layout/footer.php'; ?>	
 					
 	</body> 
 

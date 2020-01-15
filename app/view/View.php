@@ -15,6 +15,6 @@ class View
         // Extract the data so you can access all the variables in
         // the "data" array inside your included view files
         extract($this->data);
-        require_once BASE_DIR . '/shared/layout/layout.php';
+        require_once BASE_DIR . '/views/layout/layout.php';
     }
 }

@@ -2,7 +2,7 @@
 
 class Load{
 
-    private static $directories = ['includes', 'controllers', 'config', 'models'];
+    private static $directories = ['includes', 'app', 'config'];
 
     public static function All(){
         
