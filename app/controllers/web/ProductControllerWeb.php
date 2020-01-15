@@ -6,9 +6,11 @@ class ProductControllerWeb
     {
         return new View( 
             [ 
-                'page' => 'products', 
+                'page' => 'product/products', 
                 'products' => R::getAll('SELECT * FROM products') 
             ]
         );
+
+        return view("product.product", ['products' => R::getAll('SELECT * FROM products')] );
     }
 }

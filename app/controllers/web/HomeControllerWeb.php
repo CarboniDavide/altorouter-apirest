@@ -12,7 +12,7 @@ class HomeControllerWeb
     {
         return new View( 
             [ 
-                'page' => 'home', 
+                'page' => 'home/home', 
             ]
         );
     }
