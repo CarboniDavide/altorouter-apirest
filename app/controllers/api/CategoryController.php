@@ -93,8 +93,8 @@ class CategoryController extends Controller
         $category->created = !isset($data->created) ? $category->created :  $data->created;
         $category->modified = !isset($data->modified) ? $category->modified :  $data->modified;
 
-        // update and check
-        if($category-update()){
+        // update and checks
+        if($category->update()){
             header("HTTP/1.1 201 OK Updated");
             echo json_encode(array("message"=>"Category was updated."), JSON_PRETTY_PRINT);
         }
