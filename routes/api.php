@@ -3,6 +3,7 @@
 $prefix = API_PREFIX;
 
 $router->map( 'GET', $prefix.'/', 'ApiController#index', 'api_index');
+$router->map( 'GET', $prefix.'', 'ApiController#index', '_api_index');
 
 # Routes API Product
 $router->map( 'GET', $prefix.'/products', 'ProductController#index', 'product_index');
