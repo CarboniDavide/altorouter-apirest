@@ -16,16 +16,6 @@ PHP 5.3
 - Create in your database a new schema by using the sql script to generate all data.
 - Deploy the project in your Apache Server (Nginx is the same).
 
-# Test API without server
-
-If you want to test the API directly you have a web site of products:
-
-http://www.catalogue.carboni.ch/
-
-which you can manage by using API Rest (GET, POST, PUT, DELETE)
-
-http://www.catalogue.carboni.ch/api/v1/
-
 # Ressources
 
 For more informations:
